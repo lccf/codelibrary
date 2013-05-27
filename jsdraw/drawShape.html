@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>JS绘制五边形</title>
+  <style type="text/css">
+    .paper {
+      width: 900px;
+      height: 600px;
+      border-color: #E0E0E0;
+      border: 1px solid #DDD;
+      position: relative;
+    }
+    .point {
+      width: 1px;
+      height: 1px;
+      position: absolute;
+      overflow: hidden;
+      display: block;
+      zoom: 1;
+    }
+    .red {
+      background-color: red;
+    }
+  </style>
+  <script type="text/javascript">
+    // 画斜线
+    function drawLine(point1, point2) {
+      var point, pointElem, paper;
+
+      pointElem = document.createElement('div');
+      if ('className' in pointElem) {
+        pointElem.className = 'point red';
+      }
+      else {
+        pointElem.setAttribute('class', 'point red');
+      }
+
+      paper = document.getElementById('paper');
+
+      var xLen = Math.abs(point2[0] - point1[0]);
+      var yLen = Math.abs(point2[1] - point1[1]);
+      var x, y, cx, cy, tox, toy, rate, rateVal, isAdd = true;
+      // 从x轴遍历
+      if (xLen >= yLen) {
+        if (point1[0] > point2[0]) { point1 = [point2, point2=point1][0]; }
+        if (point1[1] > point2[1]) { isAdd = false; }
+
+        x = cx = point1[0];
+        y = cy = point1[1];
+        tox = point2[0];
+        toy = point2[1];
+
+        rateVal = rate = parseInt( (yLen / xLen) * 1000)
+        for (var i=x; i<tox; i++) {
+          cx = i;
+          point = pointElem.cloneNode();
+          paper.appendChild(point);
+          point.style.left = cx + 'px';
+          point.style.top = cy + 'px';
+          rateVal += rate
+          if (rateVal >= 1000) {
+            cy += isAdd ? 1 : -1
+            rateVal -= 1000;
+          }
+        }
+      }
+      // 从y轴遍历
+      else {
+        if (point1[1] > point2[1]) { point1 = [point2, point2=point1][0]; }
+        if (point1[0] > point2[0]) { isAdd = false; }
+
+        x = cx = point1[0];
+        y = cy = point1[1];
+        tox = point2[0];
+        toy = point2[1];
+
+        rateVal = rate = parseInt( (xLen / yLen) * 1000)
+        for (var i=y; i<toy; i++) {
+          cy = i;
+          point = pointElem.cloneNode();
+          paper.appendChild(point);
+          point.style.left = cx + 'px';
+          point.style.top = cy + 'px';
+          point = null
+          rateVal += rate
+          if (rateVal >= 1000) {
+            cx += isAdd ? 1 : -1
+            rateVal -= 1000;
+          }
+        }
+      }
+      // 补点
+      if (cx != tox || cy != toy) {
+        point = pointElem.cloneNode();
+        paper.appendChild(point);
+        point.setAttribute('style', 'left:' + tox + 'px; top:' + toy + 'px');
+        point = null
+      }
+      pointElem = null;
+    }
+
+    // 镜像函数
+    function getMirrorInfo(type, dot, point) {
+      var ret = [point[0], point[1]];
+      // 快速判断
+      if (dot[0] != point[0] || dot[1] != point[1]) {
+        // x轴镜像
+        if (type & 1) {
+          ret[1] = dot[1] * 2 - point[1]
+        }
+        // y轴镜像
+        if (type & 2) {
+          ret[0] = dot[0] * 2 - point[0]
+        }
+      }
+      return ret;
+    }
+
+    // 获取点信息
+    function getPointInfo(R, dot, num, inscribe) {
+      var cAngle, iAngle;
+      // 圆心角
+      cAngle  = 360 / num;
+      // 内角
+      iAngle = (num - 2) * 180 / num;
+      // 处理内切圆
+      if (inscribe) {
+        R = Math.round((1/Math.cos((90-iAngle/2) / 180 * Math.PI)) * R)
+        return getPointInfo(R, dot, num, false)
+      }
+
+      var ret, tmpRet, pointCount, currAngle, currPointAngle, yMoveType, xLen, yLen;
+
+      ret = []
+      ret.push([dot[0], dot[1]-R])
+
+      // 正方形
+      if (iAngle != 90) {
+        // 要要的点数
+        pointCount = Math.ceil(num / 2)
+
+        for (var i=1; i<pointCount; i++) {
+          // x轴移动方向
+          yMoveType = 1
+          // 当前要求的点的角
+          currAngle = currPointAngle = i * cAngle;
+          // 临时变量
+          tmpRet = [];
+
+          if (currPointAngle > 90) {
+            // x轴是相减
+            yMoveType = 0;
+            currAngle = 180 - currPointAngle;
+          }
+          xLen = Math.round(Math.sin(currAngle / 180 * Math.PI) * R)
+          yLen = Math.round(Math.cos(currAngle / 180 * Math.PI) * R)
+          tmpRet[0] = dot[0] + xLen
+          tmpRet[1] = !yMoveType ? dot[1] + yLen : dot[1] - yLen
+          // 栈尾压点
+          ret.push(tmpRet)
+          // 栈头压镜像点
+          ret.unshift(getMirrorInfo(2, dot, tmpRet))
+        }
+
+        if (num % 2 == 0) {
+          ret.push(getMirrorInfo(1, dot, [dot[0], dot[1]-R]));
+        }
+
+      }
+      else {
+        tmpRet = [dot[0]+R, dot[1]];
+        ret.push(tmpRet);
+        ret.push(getMirrorInfo(1, dot, ret[0]));
+        ret.push(getMirrorInfo(2, dot, tmpRet));
+      }
+
+      return ret;
+
+      /*
+       * var A = 360 / 5
+       * var sinLen = Math.sin(A / 180 * Math.PI) * R
+       * var cosLen = Math.cos(A / 180 * Math.PI) * R
+       * sinLen = Math.round(sinLen)
+       * cosLen = Math.round(cosLen)
+
+       * var point1 = [dot[0], dot[1] - R]
+       * var point2 = [dot[0] + sinLen, dot[1]- cosLen]
+       * var point5 = [dot[0] - sinLen, dot[1] - cosLen]
+
+       * var A2 = (180 - A) / 2
+       * sinLen = Math.sin(A2 / 180 * Math.PI) * R
+       * cosLen = Math.cos(A2 / 180 * Math.PI) * R
+       * sinLen = Math.round(sinLen)
+       * cosLen = Math.round(cosLen)
+
+       * var point3 = [dot[0] + cosLen, dot[1] + sinLen]
+       * var point4 = [dot[0] - cosLen, dot[1] + sinLen]
+
+       * return [point1, point2, point3, point4, point5];
+       */
+    }
+    // 画点
+    function drawShape(type, R, dot) {
+      var pointInfo = getPointInfo(R, dot)
+      var point1 = pointInfo[0];
+      var point2 = pointInfo[1];
+      var point3 = pointInfo[2];
+      var point4 = pointInfo[3];
+      var point5 = pointInfo[4];
+      // 五边形
+      if (type == 1) {
+        drawLine(point1, point2);
+        drawLine(point2, point3);
+        drawLine(point3, point4);
+        drawLine(point4, point5);
+        drawLine(point5, point1);
+      }
+      // 五角星
+      else if (type == 2){
+        drawLine(point1, point3);
+        drawLine(point3, point5);
+        drawLine(point5, point2);
+        drawLine(point2, point4);
+        drawLine(point1, point4);
+      }
+    }
+
+    function drawTriangle(R, dot, inscribe) {
+      var points = getPointInfo(R, dot, 3, inscribe);
+      drawLine(points[0], points[1]);
+      drawLine(points[1], points[2]);
+      drawLine(points[2], points[0]);
+      // drawLine(dot, points[0]);
+      // drawLine(dot, points[1]);
+      // drawLine(dot, points[2]);
+    }
+
+    function drawSquare(R, dot, inscribe) {
+      var points = getPointInfo(R, dot, 4, inscribe);
+      drawLine(points[0], points[1]);
+      drawLine(points[1], points[2]);
+      drawLine(points[2], points[3]);
+      drawLine(points[3], points[0]);
+      // drawLine(dot, points[0]);
+      /*
+       * drawLine(dot, points[0]);
+       * drawLine(dot, points[1]);
+       * drawLine(dot, points[2]);
+       */
+    }
+
+    function drawPentagon(R, dot, inscribe) {
+      var points = getPointInfo(R, dot, 5, inscribe);
+      drawLine(points[0], points[1]);
+      drawLine(points[1], points[2]);
+      drawLine(points[2], points[3]);
+      drawLine(points[3], points[4]);
+      drawLine(points[4], points[0]);
+
+      // drawLine(dot, points[1]);
+    }
+
+    function drawCustome(R, dot, num, inscribe) {
+      var end, points = getPointInfo(R, dot, num, inscribe);
+      for (var i=0; i<points.length; i++) {
+        end = i+1 >= points.length ? 0 : i+1;
+        drawLine(points[i], points[end]);
+      }
+    }
+
+
+    window.onload = function () {
+      var stime = (+new Date())
+      drawTriangle(100, [150, 150]);
+      drawSquare(100, [450, 150]);
+      drawSquare(100, [450, 150]);
+      drawPentagon(100, [750, 150]);
+      drawCustome(100, [150, 450], 6);
+      drawCustome(100, [450, 450], 7);
+      drawCustome(100, [750, 450], 8);
+      alert('耗时：'+(((+new Date())-stime)/1000)+'秒');
+    }
+  </script>
+</head>
+<body>
+  <div id="paper" class="paper"></div>
+</body>
+</html>
