@@ -200,32 +200,7 @@
        * return [point1, point2, point3, point4, point5];
        */
     }
-    // 画点
-    function drawShape(type, R, dot) {
-      var pointInfo = getPointInfo(R, dot)
-      var point1 = pointInfo[0];
-      var point2 = pointInfo[1];
-      var point3 = pointInfo[2];
-      var point4 = pointInfo[3];
-      var point5 = pointInfo[4];
-      // 五边形
-      if (type == 1) {
-        drawLine(point1, point2);
-        drawLine(point2, point3);
-        drawLine(point3, point4);
-        drawLine(point4, point5);
-        drawLine(point5, point1);
-      }
-      // 五角星
-      else if (type == 2){
-        drawLine(point1, point3);
-        drawLine(point3, point5);
-        drawLine(point5, point2);
-        drawLine(point2, point4);
-        drawLine(point1, point4);
-      }
-    }
-
+  // 画三角形
     function drawTriangle(R, dot, inscribe) {
       var points = getPointInfo(R, dot, 3, inscribe);
       drawLine(points[0], points[1]);
@@ -235,7 +210,7 @@
       // drawLine(dot, points[1]);
       // drawLine(dot, points[2]);
     }
-
+    // 画正方形
     function drawSquare(R, dot, inscribe) {
       var points = getPointInfo(R, dot, 4, inscribe);
       drawLine(points[0], points[1]);
@@ -249,7 +224,7 @@
        * drawLine(dot, points[2]);
        */
     }
-
+    // 画五边形
     function drawPentagon(R, dot, inscribe) {
       var points = getPointInfo(R, dot, 5, inscribe);
       drawLine(points[0], points[1]);
@@ -260,15 +235,18 @@
 
       // drawLine(dot, points[1]);
     }
-
+    // 自定义
     function drawCustome(R, dot, num, inscribe) {
       var end, points = getPointInfo(R, dot, num, inscribe);
+      if (num < 2) {
+        alert('多边形最少需有3条边');
+        return;
+      }
       for (var i=0; i<points.length; i++) {
         end = i+1 >= points.length ? 0 : i+1;
         drawLine(points[i], points[end]);
       }
     }
-
 
     window.onload = function () {
       var stime = (+new Date())
@@ -279,7 +257,7 @@
       drawCustome(100, [150, 450], 6);
       drawCustome(100, [450, 450], 7);
       drawCustome(100, [750, 450], 8);
-      alert('耗时：'+(((+new Date())-stime)/1000)+'秒');
+      // alert('耗时：'+(((+new Date())-stime)/1000)+'秒');
     }
   </script>
 </head>
