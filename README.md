@@ -4,4 +4,5 @@
 
 ##归档说明
 
-	jsdraw     #js象素绘制图形。
+	jsdraw      #js象素绘制图形。
+	browsersync #脚本
