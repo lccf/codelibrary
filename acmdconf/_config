@@ -1,0 +1,45 @@
+{
+  "jade/": {
+    "path": "~",
+    "jade": {
+      "command": [
+        "jade -Po ../html jade/#{$fileName}.jade"
+      ]
+    }
+  },
+  "sass/": {
+    "path": "~",
+    "sass": {
+      "command": [
+        "sass --sourcemap=none --style compact sass/#{$fileName}.sass | sed '/^@charset/d' > ../html/css/#{$fileName}.css"
+         /* , "cp -fp ../css/#{$fileName}.css ../../public/css" */
+      ]
+    },
+    "scss": {
+      "command": [
+        "sass --sourcemap=none --style compact sass/#{$fileName}.scss | sed '/^@charset/d' > ../html/css/#{$fileName}.css"
+         /* , "cp -fp ../css/#{$fileName}.css ../../public/css" */
+      ]
+    }
+  },
+  "coffee/": {
+    "path": "~",
+    "coffee": {
+      "command":[
+        "coffee -bp coffee/#{$fileName}.coffee>../html/js/#{$fileName}.js"
+         /* , "cp -fp ../js/#{$fileName}.js ../../public/js" */
+      ]
+    }
+  },
+  "live/": {
+    "path": "~",
+    "ls": {
+      "command":[
+        "lsc -bpc live/#{$fileName}.ls>../html/js/#{$fileName}.js"
+         /* , "cp -fp ../js/#{$fileName}.js ../../public/js" */
+      ]
+    }
+  }
+}
+/* vim:ft=javascript ts=2 sts=2 sw=2 et
+*/
