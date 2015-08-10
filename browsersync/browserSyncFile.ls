@@ -5,12 +5,10 @@ browserSync = require \browser-sync .create!
 # config {{{
 baseDir = '.'
 
-outputDir = '.'
-cssOutputDir = "./css"
-jsOutputDir = "./js"
+outputDir = './html'
+cssOutputDir = "./html/css"
+jsOutputDir = "./html/js"
 
-docsDir = "#baseDir/docs"
-exampleDir = "#docsDir/example"
 
 
 reloadWatchFile = ''
@@ -19,10 +17,9 @@ reloadWatchFile = ''
   # "HZ.WapApp.UI/Content/img/*.*"
 
 compileWatchFile =
+  "_source/jade/*.jade"
   "_source/live/*.ls"
-  "#docsDir/_source/jade/*.jade"
-  "#exampleDir/_source/jade/*.jade"
-  "#exampleDir/_source/live/*.ls"
+  "_source/sass/*.sass"
 
 autoCompileFile = false
 #autoCompileFile = true
@@ -51,16 +48,8 @@ getCompileCmdAndFileName = (file, ext) ->
 
   switch ext
   case '.jade' then
-    switch relativePath
-    case 'docs/_source/jade'
-      compileFileName = "#baseDir/docs/#{filename}.html"
-      cmd = "jade -Po #baseDir/docs #file"
-    case 'docs/example/_source/jade'
-      compileFileName = "#exampleDir/#{filename}.html"
-      cmd = "jade -Po #exampleDir #file"
-    default
-      compileFileName = "#outputDir/#{filename}.html"
-      cmd = "jade -Po #outputDir #file"
+    compileFileName = "#outputDir/#{filename}.html"
+    cmd = "jade -Po #outputDir #file"
   case '.sass' then
     compileFileName = "#cssOutputDir/#{filename}.css"
     cmd = "sass --sourcemap=none --style compact #file|sed '/^@charset/d'>#compileFileName"
@@ -68,16 +57,8 @@ getCompileCmdAndFileName = (file, ext) ->
     compileFileName = "#jsOutputDir/#{filename}.js"
     cmd = "coffee --no-header -bco #jsOutputDir #file"
   case '.ls' then
-    switch relativePath
-    case '_source/live'
-      compileFileName = "#baseDir/js/#{filename}.js"
-      cmd = "lsc --no-header -cp #file>#compileFileName"
-    case 'docs/example/_source/live'
-      compileFileName = "#exampleDir/js/#{filename}.js"
-      cmd = "lsc --no-header -cp #file>#compileFileName"
-    default
-      compileFileName = "#jsOutputDir/#{filename}.js"
-      cmd = "lsc --no-header -co #jsOutputDir #file"
+    compileFileName = "#jsOutputDir/#{filename}.js"
+    cmd = "lsc --no-header -co #jsOutputDir #file"
   default
     compileFileName = cmd = ''
   [cmd, compileFileName]
@@ -132,7 +113,7 @@ compileCallback = (file) !->
 # browserSync {{{
 browserSync.init do
   server:
-    baseDir: baseDir
+    baseDir: outputDir
     index: \index.html
   open: false
 
