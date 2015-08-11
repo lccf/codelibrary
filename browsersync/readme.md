@@ -8,7 +8,17 @@ gem install sass
 npm install browser-sync jade coffee-script livescript -g
 # 使用
 lsc browserSyncFile.ls
+# 执行命令后结果应显示如下结果：
+[BS] Access URLs:
+ ---------------------------------------
+       Local: http://localhost:3000
+    External: http://192.168.1.123:3000
+ ---------------------------------------
+          UI: http://localhost:3001
+ UI External: http://192.168.1.123:3001
+ ---------------------------------------
 ```
+使用浏览器打开Local的地址(我这里是localhost:3000)，可访问生成的web页面。
 鉴于墙内的网络问题，建议大家访问[http://ruby.taobao.org](http://ruby.taobao.org)和[http://npm.taobao.org](http://npm.taobao.org)设置国内镜像以加速安装。
 
 ## 配置
@@ -41,3 +51,20 @@ autoCompileFile
 compileCallback函数接受watch事件传入的文件名并分解文件后缀。默认会处理后缀为.jade、.coffee、.ls、.sass的文件，以_打头的文件被认为是局部文件，自动忽略。可以在这里添加一种文件类型(如.less)或一种忽略规则，添加文件类型后需要针对该类型定义编译命令。
 ### 自定义编译命令
 getCompileCmdAndFileName函数中处理传入的文件、扩展名并返回对应的执行命令。可以使用数组返回多条命令，会依次执行。relativePath表示文件相对于baseDir的路径，用来处理子目录编译到不同路径的差异化需求。
+
+## browserSync配置
+browserSync配置见官网说，[http://www.browsersync.io/docs/options/](http://www.browsersync.io/docs/options/)，这里只对用到的进行说明。
+
+```javascript
+browserSync.init({
+  // 服务器配置
+  server: {
+    // web服务器根目录
+    baseDir: outputDir,
+    // 索引页
+    index: 'index.html'
+  },
+  // 是否自动打开浏览器
+  open: false
+});
+```
