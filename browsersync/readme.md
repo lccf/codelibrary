@@ -60,7 +60,7 @@ compileCallback函数接受watch事件传入的文件名并分解文件后缀。
 getCompileCmdAndFileName函数中处理传入的文件、扩展名并返回对应的执行命令。可以使用数组返回多条命令，会依次执行。relativePath表示文件相对于baseDir的路径，用来处理子目录编译到不同路径的差异化需求。
 
 ## browserSync配置
-browserSync配置见官网说，[http://www.browsersync.io/docs/options/](http://www.browsersync.io/docs/options/)，这里只对用到的进行说明。
+browserSync配置见官网文档[http://www.browsersync.io/docs/options/](http://www.browsersync.io/docs/options/)，这里只对用到的进行说明。
 
 ```javascript
 browserSync.init({
