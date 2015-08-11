@@ -1,5 +1,12 @@
 # browserSync预编译脚本
-使用browserSync来自动编译jade/sass/coffeescript/livescript等前端预处理器语言。使用browserSync的watch功能侦测文件改动，根据文件类型找到对应的编译命令并调用nodejs的child_process模块执行编译命令，编译完成后调用browserSync的livereload功能触发浏览器自动刷新。本脚本使用livescript编译，用到browserSync和nodejs的path、child_process模块，如有使用疑问可至相应官网查找资料。
+本脚本使用browserSync来自动编译jade/sass/coffeescript/livescript等前端预处理器语言。脚本使用livescript编写，用到browserSync和nodejs的path、child_process模块，如有使用疑问可至相应官网查找资料。
+
+实现原理如下：
+
+1. 使用browserSync的watch功能侦测文件改动
+2. 根据文件类型找到对应的编译命令
+3. 调用nodejs的child_process模块执行编译命令
+4. 编译完成后调用browserSync的livereload功能触发浏览器自动刷新。
 
 ## 使用
 ```bash
