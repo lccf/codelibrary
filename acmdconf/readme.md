@@ -27,4 +27,4 @@
 - path 表示执行命令的路径，~表示在配置文件所在的目录执行
 - sass 表示文件后缀为sass格式的
 - command 表示执行的命令，可以是数组返回多个命令，会依次执行
-- | sed '^@charset/d' 表示用通道将内容输出并使用sed命令删除以 @charset开头的行
+- | sed '\^@charset/d' 表示用通道将内容输出并使用sed命令删除以 @charset开头的行
