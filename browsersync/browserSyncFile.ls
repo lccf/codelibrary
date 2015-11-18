@@ -1,6 +1,7 @@
-path = require \path
-exec = require \child_process .exec
+path        = require \path
+exec        = require \child_process .exec
 browserSync = require \browser-sync .create!
+notifier    = require \node-notifier
 
 # config {{{
 baseDir = '.'
@@ -8,8 +9,6 @@ baseDir = '.'
 outputDir = './html'
 cssOutputDir = "./html/css"
 jsOutputDir = "./html/js"
-
-
 
 reloadWatchFile = ''
   # "#outputDir/*.html"
@@ -23,6 +22,15 @@ compileWatchFile =
 
 autoCompileFile = false
 #autoCompileFile = true
+# }}}
+# showMessage {{{
+showMessage = (title, message) ->
+  console.log message
+
+  notifier.notify do
+    title   : title
+    message : message
+    sound   : true
 # }}}
 # getTimeToken {{{
 getTimeToken = ->
@@ -69,7 +77,7 @@ compileTask = (file, ext, reload) !->
     [cmd, filename] = getCompileCmdAndFileName file, ext
 
   if not cmd or not filename
-    console.log "cmd not define. file: #file ext: #ext"
+    showMessage 'Get Command Error', "cmd not define. file: #file ext: #ext"
 
   # exec callback
   execCallback = (err, stdo, stde) !->
@@ -80,7 +88,7 @@ compileTask = (file, ext, reload) !->
       else
         execCmd()
     else
-      console.log err || stde
+      showMessage "Compile Error", err || stde
 
   # execute command
   do execCmd = !->
@@ -104,11 +112,9 @@ compileCallback = (file) !->
 
   switch ext
   case '.jade', '.coffee', '.ls', '.sass'
-    #   compileTask file, ext
-    # case '.sass'
     compileTask file, ext, browserSync.reload
   default
-    console.log 'unknown file type.'
+    showMessage "File Type Error", 'unknown file type.'
 # }}}
 # browserSync {{{
 browserSync.init do
