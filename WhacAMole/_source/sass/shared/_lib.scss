@@ -1,0 +1,280 @@
+﻿@import '../include/var';
+/* 常用样式缩写 */
+/* float */
+.Lfll { float:left; }
+@mixin Lfll { float:left; }
+.Lflr { float:right; }
+@mixin Lflr { float:right; }
+.Lcfl { clear:left; }
+@mixin Lcfl { clear:left; }
+.Lcfr { clear:right; }
+@mixin Lcfr { clear:right; }
+.Lcfb { clear:both; }
+@mixin Lcfb { clear:both; }
+/* font-size */
+.Lfz10 { font-size:10px; }
+@mixin Lfz10 { font-size:10px; }
+.Lfz12 { font-size:12px; }
+@mixin Lfz12 { font-size:12px; }
+.Lfz14 { font-size:14px; }
+@mixin Lfz14 { font-size:14px; }
+.Lfz16 { font-size:16px; }
+@mixin Lfz16 { font-size:16px; }
+.Lfz18 { font-size:18px; }
+@mixin Lfz18 { font-size:18px; }
+.Lfz20 { font-size:20px; }
+@mixin Lfz20 { font-size:20px; }
+/* color */
+.Lcfff { color:#FFF; }
+@mixin Lcfff { color:#FFF; }
+.Lcf60 { color:#F60; }
+@mixin Lcf60 { color:#F60; }
+.Lcc00 { color:#C00; }
+@mixin Lcc00 { color:#C00; }
+.Lcf00 { color:#F00; }
+@mixin Lcf00 { color:#F00; }
+.Lc390 { color:#390; }
+@mixin Lc390 { color:#390; }
+.Lc333 { color:#333; }
+@mixin Lc333 { color:#333; }
+.Lc666 { color:#666; }
+@mixin Lc666 { color:#666; }
+.Lc999 { color:#999; }
+@mixin Lc999 { color:#999; }
+/* text-align */
+.Ltal { text-align:left; }
+@mixin Ltal { text-align:left; }
+.Ltac { text-align:center; }
+@mixin Ltac { text-align:center; }
+.Ltar { text-align:right; }
+@mixin Ltar { text-align:right; }
+.Lfwb { font-weight:bold; }
+@mixin Lfwb { font-weight:bold; }
+/* font-family */
+.Lffar { font-family:Arial; }
+@mixin Lffar { font-family:Arial; }
+.Lfftm { font-family:Tahoma; }
+@mixin Lfftm { font-family:Tahoma; }
+.Lffst { font-family:\5B8B\4F53; }
+@mixin Lffst { font-family:\5B8B\4F53; }
+.Lffyh { font-family:\5FAE\8F6F\96C5\9ED1; }
+@mixin Lffyh { font-family:\5FAE\8F6F\96C5\9ED1; }
+/* text-indent */
+.Lti5 { text-indent:5px; }
+@mixin Lti5 { text-indent:5px; }
+.Lti10 { text-indent:10px; }
+@mixin Lti10 { text-indent:10px; }
+.Lti15 { text-indent:15px; }
+@mixin Lti15 { text-indent:15px; }
+.Lti20 { text-indent:20px; }
+@mixin Lti20 { text-indent:20px; }
+.Lti25 { text-indent:25px; }
+@mixin Lti25 { text-indent:25px; }
+.Lti30 { text-indent:30px; }
+@mixin Lti30 { text-indent:30px; }
+.Lti35 { text-indent:35px; }
+@mixin Lti35 { text-indent:35px; }
+.Lti40 { text-indent:40px; }
+@mixin Lti40 { text-indent:40px; }
+.Lti1000r { text-indent:-1000px; }
+@mixin Lti1000r { text-indent:-1000px; }
+/* margin */
+.Lmt5 { margin-top:5px; }
+@mixin Lmt5 { margin-top:5px; }
+.Lmt10 { margin-top:10px; }
+@mixin Lmt10 { margin-top:10px; }
+.Lmt15 { margin-top:15px; }
+@mixin Lmt15 { margin-top:15px; }
+.Lmt20 { margin-top:20px; }
+@mixin Lmt20 { margin-top:20px; }
+.Lmt25 { margin-top:25px; }
+@mixin Lmt25 { margin-top:25px; }
+.Lmt30 { margin-top:30px; }
+@mixin Lmt30 { margin-top:30px; }
+.Lmt35 { margin-top:35px; }
+@mixin Lmt35 { margin-top:35px; }
+.Lmt40 { margin-top:40px; }
+@mixin Lmt40 { margin-top:40px; }
+
+.Lmt10r { margin-top: -15px; }
+.Lmt30r { margin-top: -30px; }
+
+.Lmr5 { margin-right:5px; }
+@mixin Lmr5 { margin-right:5px; }
+.Lmr10 { margin-right:10px; }
+@mixin Lmr10 { margin-right:10px; }
+.Lmr15 { margin-right:15px; }
+@mixin Lmr15 { margin-right:15px; }
+.Lmr20 { margin-right:20px; }
+@mixin Lmr20 { margin-right:20px; }
+.Lmr25 { margin-right:25px; }
+@mixin Lmr25 { margin-right:25px; }
+.Lmr30 { margin-right:30px; }
+@mixin Lmr30 { margin-right:30px; }
+.Lmr35 { margin-right:35px; }
+@mixin Lmr35 { margin-right:35px; }
+.Lmr40 { margin-right:40px; }
+@mixin Lmr40 { margin-right:40px; }
+
+.Lmb5 { margin-bottom:5px; }
+@mixin Lmb5 { margin-bottom:5px; }
+.Lmb10 { margin-bottom:10px; }
+@mixin Lmb10 { margin-bottom:10px; }
+.Lmb15 { margin-bottom:15px; }
+@mixin Lmb15 { margin-bottom:15px; }
+.Lmb20 { margin-bottom:20px; }
+@mixin Lmb20 { margin-bottom:20px; }
+.Lmb25 { margin-bottom:25px; }
+@mixin Lmb25 { margin-bottom:25px; }
+.Lmb30 { margin-bottom:30px; }
+@mixin Lmb30 { margin-bottom:30px; }
+.Lmb35 { margin-bottom:35px; }
+@mixin Lmb35 { margin-bottom:35px; }
+.Lmb40 { margin-bottom:40px; }
+@mixin Lmb40 { margin-bottom:40px; }
+
+.Lml5 { margin-left:5px; }
+@mixin Lml5 { margin-left:5px; }
+.Lml10 { margin-left:10px; }
+@mixin Lml10 { margin-left:10px; }
+.Lml15 { margin-left:15px; }
+@mixin Lml15 { margin-left:15px; }
+.Lml20 { margin-left:20px; }
+@mixin Lml20 { margin-left:20px; }
+.Lml25 { margin-left:25px; }
+@mixin Lml25 { margin-left:25px; }
+.Lml30 { margin-left:30px; }
+@mixin Lml30 { margin-left:30px; }
+.Lml35 { margin-left:35px; }
+@mixin Lml35 { margin-left:35px; }
+.Lml40 { margin-left:40px; }
+@mixin Lml40 { margin-left:40px; }
+/* padding */
+.Lpt5 { padding-top:5px; }
+@mixin Lpt5 { padding-top:5px; }
+.Lpt10 { padding-top:10px; }
+@mixin Lpt10 { padding-top:10px; }
+.Lpt15 { padding-top:15px }
+@mixin Lpt15 { padding-top:15px }
+.Lpt20 { padding-top:20px; }
+@mixin Lpt20 { padding-top:20px; }
+.Lpt25 { padding-top:25px; }
+@mixin Lpt25 { padding-top:25px; }
+.Lpt30 { padding-top:30px; }
+@mixin Lpt30 { padding-top:30px; }
+.Lpt35 { padding-top:35px; }
+@mixin Lpt35 { padding-top:35px; }
+.Lpt40 { padding-top:40px; }
+@mixin Lpt40 { padding-top:40px; }
+
+.Lpr5 { padding-right:5px; }
+@mixin Lpr5 { padding-right:5px; }
+.Lpr10 { padding-right:10px; }
+@mixin Lpr10 { padding-right:10px; }
+.Lpr15 { padding-right:15px; }
+@mixin Lpr15 { padding-right:15px; }
+.Lpr20 { padding-right:20px; }
+@mixin Lpr20 { padding-right:20px; }
+.Lpr25 { padding-right:25px; }
+@mixin Lpr25 { padding-right:25px; }
+.Lpr30 { padding-right:30px; }
+@mixin Lpr30 { padding-right:30px; }
+.Lpr35 { padding-right:35px; }
+@mixin Lpr35 { padding-right:35px; }
+.Lpr40 { padding-right:40px; }
+@mixin Lpr40 { padding-right:40px; }
+
+.Lpb5 { padding-bottom:5px; }
+@mixin Lpb5 { padding-bottom:5px; }
+.Lpb10 { padding-bottom:10px; }
+@mixin Lpb10 { padding-bottom:10px; }
+.Lpb15 { padding-bottom:15px; }
+@mixin Lpb15 { padding-bottom:15px; }
+.Lpb20 { padding-bottom:20px; }
+@mixin Lpb20 { padding-bottom:20px; }
+.Lpb25 { padding-bottom:25px; }
+@mixin Lpb25 { padding-bottom:25px; }
+.Lpb30 { padding-bottom:30px; }
+@mixin Lpb30 { padding-bottom:30px; }
+.Lpb35 { padding-bottom:35px; }
+@mixin Lpb35 { padding-bottom:35px; }
+.Lpb40 { padding-bottom:40px; }
+@mixin Lpb40 { padding-bottom:40px; }
+
+.Lpl5 { padding-left:5px; }
+@mixin Lpl5 { padding-left:5px; }
+.Lpl10 { padding-left:10px; }
+@mixin Lpl10 { padding-left:10px; }
+.Lpl15 { padding-left:15px; }
+@mixin Lpl15 { padding-left:15px; }
+.Lpl20 { padding-left:20px; }
+@mixin Lpl20 { padding-left:20px; }
+.Lpl25 { padding-left:25px; }
+@mixin Lpl25 { padding-left:25px; }
+.Lpl30 { padding-left:30px; }
+@mixin Lpl30 { padding-left:30px; }
+.Lpl35 { padding-left:35px; }
+@mixin Lpl35 { padding-left:35px; }
+.Lpl40 { padding-left:40px; }
+@mixin Lpl40 { padding-left:40px; }
+/* position */
+.Lposa { position:absolute; }
+@mixin Lposa { position:absolute; }
+.Lposr { position:relative; }
+@mixin Lposr { position:relative; }
+.Lposf { position:fixed; }
+@mixin Lposf { position:fixed; }
+.Lposs { position:static; }
+@mixin Lposs { position:static; }
+/* display */
+.Ldb { display:block; }
+@mixin Ldb { display:block; }
+.Ldn { display:none; }
+@mixin Ldn { display:none; }
+.Ldib { display:inline-block; }
+@mixin Ldib { display:inline-block; }
+/* overflow */
+.Lovh { overflow:hidden; }
+@mixin Lovh { overflow:hidden; }
+.Lovv { overflow:visible; }
+@mixin Lovv { overflow:visible; }
+/* visibility */
+.Lvv { visibility:visible; }
+.Lvh { visibility:hidden; }
+/* background-color */
+.Lbgcr { background-color:Red; }
+@mixin Lbgcr { background-color:Red; }
+.Lbgcw { background-color:white; }
+@mixin Lbgcw { background-color:white; }
+.Lbgcb { background-color:blue; }
+@mixin Lbgcb { background-color:blue; }
+.Lbgcg { background-color:green; }
+@mixin Lbgcg { background-color:green; }
+.Lbgco { background-color:orange; }
+@mixin Lbgco { background-color:orange; }
+.Lbgcy { background-color:yellow; }
+@mixin Lbgcy { background-color:yellow; }
+/* other */
+.Lon { outline:none; }
+@mixin Lon { outline:none; }
+.Lcurp { cursor:pointer; }
+@mixin Lcurp { cursor:pointer; }
+.Ldbx { @include prefix_value(display, box); }
+@mixin Ldbx { @include prefix_value(display, box); }
+.Lbpc { @include prefix(box-pack, center); }
+@mixin Lbpc { @include prefix(box-pack, center); }
+.Lbac { @include prefix(box-align, center); }
+@mixin Lbac { @include prefix(box-align, center); }
+
+@mixin Lcfx {
+  zoom: 1;
+  &:before, &:after { content:""; display:table; }
+  &:after { clear:both }
+}
+.Lcfx { @include Lcfx; }
+
+.Lbxzbb { @include box-sizing; }
+
+@mixin Lmlra { margin-left: auto; margin-right: auto }
+.Lmlra { @include Lmlra; }
+/* vim: se sw=2 ts=2 sts=2 et: */

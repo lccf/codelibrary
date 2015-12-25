@@ -1,0 +1,186 @@
+@import 'include/_var', 'shared/_reset', 'shared/_lib'
+
+html, body
+  padding: 0
+  margin: 0
+  font-size: 16px
+
+html
+  min-height: 100%
+  position: relative
+
+.Cback_p1
+  background: #9dceef img-url('bg_main1.jpg') center bottom no-repeat
+    size: 100% auto
+
+.Cback_p2
+  background: img-url('bg_main2.jpg') center bottom no-repeat
+    size: 100% auto
+
+.Cback_p3
+  background: img-url('bg_main3.jpg') center bottom no-repeat
+    size: 100% auto
+
+=wrap
+  min-width: $min-width
+  max-width: $max-width
+  margin:
+    left: auto
+    right: auto
+
+.Cwrap
+  +wrap
+
+.HM_play
+  position: relative
+  .title
+    position: absolute
+    background: img-url('bg_button.png') 0 -50px no-repeat
+      size: 160px auto
+    width: 160px
+    height: 25px
+    top: 0
+    left: 0
+    margin-top: 20px
+    margin-left: 20px
+    z-index: 2
+
+.Cpopup
+  &.default
+    position: absolute
+    width: 100%
+    height: 100%
+    // overflow: hidden
+    z-index: 49
+    background-color: rgba(black, .5)
+    .inner
+      position: relative
+    .sharebox
+      min-height: 20px
+    .share
+      width: 132px
+      height: 77px
+      background: img-url('bg_button.png') 0 -200px no-repeat
+        size: 160px auto
+    .content_box
+      width: 100%
+      +box-sizing
+      position: relative
+      margin-top: 40px
+      padding:
+        left: 7%
+        right: 7%
+    .hamster
+      background: img-url('bg_hamster.png') 0 0 no-repeat
+        size: 450px auto
+      width: 150px
+      height: 125px
+      position: absolute
+      top: 0
+      z-index: 2
+      margin-top: -40px
+      &.cry
+        background-position: 0 -125px
+    .content
+      padding: 20px
+      +border-radius(10px)
+      background-color: #A96753
+      margin:
+        left: auto
+        right: auto
+    .mbox
+      min-height: 200px
+      background-color: #F9E2C9
+      +border-radius(10px)
+    .text
+      width: 230px
+      position: relative
+      margin:
+        left: auto
+        right: auto
+      img
+        width: 230px
+        display: inline-block
+    .activity_end, .gameover
+      padding:
+        top: 70px
+        bottom: 70px
+    .shareagain
+      padding:
+        top: 50px
+        bottom: 50px
+    .playtips
+      padding:
+        top: 5px
+        bottom: 5px
+    .play_num
+      background: img-url('bg_dialog_alphabet.png') 0 0 no-repeat
+        size: 230px auto
+      position: absolute
+      top: 64px
+      left: 130px
+      display: inline-block
+      width: 15px
+      height: 23px
+      @for $i from 0 through 9
+        &.count_#{$i}
+          background-position: (0px - $i * 14) 0
+    .coupon
+      padding:
+        top: 20px
+        bottom: 20px
+    .coupon_type
+      background: img-url('bg_dialog_alphabet.png') -15px -26px no-repeat
+        size: 230px auto
+      position: absolute
+      top: 66px
+      left: 52px
+      width: 32px
+      height: 23px
+    .btn_back
+      width: 160px
+      height: 44px
+      display: inline-block
+      background: img-url('bg_button.png') 0 -278px no-repeat
+        size: 160px auto
+  &.loading
+    position: absolute
+    width: 100%
+    height: 100%
+    z-index: 49
+    background-color: rgba(black, .8)
+    .inner
+      padding:
+        left: 6.25%
+        right: 6.25%
+      width: 100%
+      +box-sizing
+      position: absolute
+      top: 50%
+      margin-top: -21px
+    .process_bar
+      border: 1px solid rgba(white, .8)
+      +border-radius(4px)
+      height: 16px
+      overflow: hidden
+      background-color: rgba(white, .1)
+      position: relative
+    .process
+      content: ''
+      width: 0%
+      background-color: #3ba636
+      left: 0
+      top: 0
+      height: 20px
+      display: inline-block
+      position: absolute
+      // +transition(width linear .1s)
+    .process_info
+      color: white
+      font-size: r-size(14)
+      line-height: r-size(20)
+
+#gameContainer
+  position: absolute
+  // bottom: 0
+  left: 0

@@ -1,0 +1,266 @@
+extends shared/_layout
+
+block pageTitle
+  title 首页
+  -var bodyCss = 'Cback_p2'
+
+block pageContent
+  .Cpopup.loading.Ldn
+    .inner
+      #loading_process.process_bar
+        i.process
+      #loading_info.process_info.Ltac 0%
+
+  .Cpopup.default.Ldn
+    .inner.Cwrap
+      .sharebox.Lcfx.Lpt10.Lpr20
+        .share.Lflr
+      .content_box
+        .hamster
+        .content
+          .mbox
+            // cry 活动已结束
+            .text.activity_end.Ldn
+              img(data-src="img/bg_dialog_text3.png")
+            // cry 属于你的地鼠已经打光了
+            .text.gameover.Ldn
+              img(data-src="img/bg_dialog_text2.png")
+            // cry 分享到朋友圈再玩一次
+            .text.shareagain.Ldn
+              img(data-src="img/bg_dialog_text1.png")
+            .text.playtips.Ldn
+              img(data-src="img/bg_dialog_text4.png")
+              i.play_num
+              // each i, key in new Array(10)
+                i(class="play_num count_#{key}")
+            .text.coupon.Ldn
+              img(data-src="img/bg_dialog_text5.png")
+              i.coupon_type
+              // i.coupon_type.type_40
+              // i.coupon_type.type_60
+              // i.coupon_type.type_80
+              // i.coupon_type.type_free
+        .Ltac.Lmt10
+          a.btn_back.Ldn(href="javascript:;")
+
+  .HM_play
+    #gameContainer
+
+block pageScript
+  include shared/_scripts
+  script(src="js/iscroll.min.js")
+  script.
+    // 进度条
+    (function() {
+      var _benchmarkProcessCallbacks = {};
+      var setBenchmarkProcess = function(process, pos, tick, callback) {
+        var $elem = $('#'+process);
+        var currPos, toPos;
+        // 如果未初始化
+        if ($elem.data('init') != 'inited') {
+          $elem.data('init', 'inited');
+          currPos = 0;
+          toPos = pos;
+        }
+        else {
+          currPos = parseInt( $elem.data('currPos') );
+          toPos = pos
+        }
+        // 如果进度小于当前，直接触发回调并退出
+        if (currPos >= toPos) {
+          if (callback) {
+            callback();
+          }
+          return;
+        }
+        $elem.data('toPos', toPos);
+        $elem.data('currPos', currPos);
+        // 绑定回调
+        _benchmarkProcessCallbacks['pos_'+pos] = callback;
+        // 如果在进度中,则更新到达，并暂退。
+        if ($elem.data('lock') == 'locked') {
+          $elem.data('toPos', pos);
+          return;
+        }
+        // 动画函数
+        var _animate = function(num, $elem) {
+          $process = $elem.find('.process')
+          $process.css('width', num+'%')
+        }
+        var _run = function(_call, $elem) {
+          var currPos = parseInt( $elem.data('currPos') );
+          var toPos = parseInt( $elem.data('toPos') );
+          var call;
+          if (++currPos <= toPos) {
+            _animate(currPos, $elem);
+            if (tick) {
+              tick(currPos)
+            }
+            $elem.data('currPos', currPos);
+            // 触发回调
+            if (call = _benchmarkProcessCallbacks['pos_'+currPos]) {
+              call();
+              _benchmarkProcessCallbacks['pos_'+currPos] = false;
+            }
+            setTimeout(function() {
+              _call(_call, $elem);
+            }, 16);
+          }
+        }
+        _run(_run, $elem);
+      }
+      resetProcess = function (process, callback) {
+        var $elem = $('#'+process);
+        var _animate = function(num, $elem) {
+
+        }
+        _animate(0, $elem)
+        if (callback) {
+          callback()
+        }
+      }
+      window.setProcess = setBenchmarkProcess;
+    })();
+
+    // 最大游戏时间
+    playMaxTime = 30
+    // playMaxActive 同时可打地鼠数
+    playMaxActive = 1
+    // playMaxCount 完成数
+    playMaxCount = 10
+
+    // 图片预加载
+    var imgBase = 'img/'
+    var imgArr = [
+      imgBase+'bg_button.png',
+      imgBase+'bg_hamster.png',
+      imgBase+'bg_startup.png',
+      imgBase+'bg_dialog_text1.png',
+      imgBase+'bg_dialog_text2.png',
+      imgBase+'bg_dialog_text3.png',
+      imgBase+'bg_dialog_text4.png',
+      imgBase+'bg_dialog_text5.png',
+      imgBase+'bg_dialog_alphabet.png',
+      imgBase+'bg_count_text.png'
+    ]
+    var imgArrLoaded = false;
+
+    initGame = function () {
+      var startLoadTime = +new Date();
+      imagePreload.load(imgArr, function (img, curr, count) {
+        var currProcess = Math.ceil(curr * 100 / count);
+        var currTime = +new Date();
+        if (currProcess >= 100) {
+          currProcess = 100
+          imgArrLoaded = true;
+        }
+        if (currTime - startLoadTime > 500) {
+          setProcess('loading_process', currProcess, function (num) {
+            $('#loading_info').text(num+'%')
+            if (num == 100) {
+              $('.Cpopup.loading').hide();
+              startGame();
+            }
+          })
+        }
+        else {
+          if (currProcess == 100) {
+            startGame();
+          }
+        }
+      });
+
+      // 开始默认进度
+      setTimeout(function () {
+        if (!imgArrLoaded) {
+          $('.Cpopup.loading').show();
+          setProcess('loading_process', 5);
+          $('#loading_info').text('5%');
+        }
+      }, 500);
+    }
+
+    // 游戏完成回调
+    playEndCallback = function (count, maxCount) {
+      if (count < maxCount) {
+        showDialog('playtips', true, count);
+      }
+      else {
+        showDialog('gameend')
+      }
+    }
+
+    var popup_scroll;
+    showDialog = function (type, share, num) {
+      var $dialog = $('.Cpopup.default');
+      var $text, $img;
+
+      $dialog.find('.text').hide();
+      // 地鼠不哭
+      $dialog.find('.hamster').removeClass('cry');
+      // 返回按钮
+      $dialog.find('.btn_back').show();
+      // 分享按钮
+      if (share) {
+        $dialog.find('.share').show();
+      }
+      else {
+        $dialog.find('.share').hide();
+      }
+
+      // 活动已结束
+      if (type == 'activity_end') {
+        $dialog.find('.hamster').addClass('cry');
+        $text = $dialog.find('.activity_end');
+        $img = $text.find('img')
+        $img.attr('src', $img.data('src'));
+        $text.show();
+        // 返回按钮
+        $dialog.find('.btn_back').hide();
+      }
+      // 属于你的地鼠已经打光了
+      if (type == 'gameover') {
+        $dialog.find('.hamster').addClass('cry');
+        $text = $dialog.find('.gameover');
+        $img = $text.find('img')
+        $img.attr('src', $img.data('src'));
+        $text.show();
+        // 返回按钮
+        $dialog.find('.btn_back').hide();
+      }
+      // 分享到朋友圈再玩一次
+      if (type == 'shareagain') {
+        $dialog.find('.hamster').addClass('cry');
+        $text = $dialog.find('.shareagain');
+        $img = $text.find('img')
+        $img.attr('src', $img.data('src'));
+        $text.show();
+        $dialog.find('.btn_back').hide();
+      }
+      // 好可惜，只打中了{num}只地鼠
+      if (type == 'playtips') {
+        $dialog.find('.hamster').addClass('cry');
+        $text = $dialog.find('.playtips');
+        $img = $text.find('img')
+        $img.attr('src', $img.data('src'));
+        $text.show();
+        $text.find('.play_num').attr('class', 'play_num count_'+num);
+      }
+      // 游戏完
+      if (type == 'gameend') {
+        $text = $dialog.find('.coupon');
+        $img = $text.find('img')
+        $img.attr('src', $img.data('src'));
+        $text.show();
+      }
+      $dialog.show();
+      if (!popup_scroll) {
+        popup_scroll = new IScroll($dialog.get(0));
+      }
+      else {
+        popup_scroll.refresh();
+      }
+    }
+    $(function() {
+      initGame();
+    });
