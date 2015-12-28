@@ -19,6 +19,7 @@ compileWatchFile =
   "_source/jade/*.jade"
   "_source/live/*.ls"
   "_source/sass/*.sass"
+  "_source/riot/*.html"
 
 autoCompileFile = false
 #autoCompileFile = true
@@ -64,6 +65,9 @@ getCompileCmdAndFileName = (file, ext) ->
   case '.coffee' then
     compileFileName = "#jsOutputDir/#{filename}.js"
     cmd = "coffee --no-header -bco #jsOutputDir #file"
+  case '.html' then
+    compileFileName = "#jsOutputDir/riot/#{filename}.js"
+    cmd = "riot --ext html --expr #file #compileFileName"
   case '.ls' then
     compileFileName = "#jsOutputDir/#{filename}.js"
     cmd = "lsc --no-header -co #jsOutputDir #file"
@@ -111,7 +115,7 @@ compileCallback = (file) !->
     return undefined
 
   switch ext
-  case '.jade', '.coffee', '.ls', '.sass'
+  case '.jade', '.coffee', '.ls', '.sass', '.html'
     compileTask file, ext, browserSync.reload
   default
     showMessage "File Type Error", 'unknown file type.'
