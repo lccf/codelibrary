@@ -68,7 +68,7 @@ getCompileCmdAndFileName = (file, ext) ->
     compileFileName = "#jsOutputDir/#{filename}.js"
     cmd = "coffee --no-header -bco #jsOutputDir #file"
   case '.html' then
-    if relativePath is '_source/roit'
+    if relativePath is '_source/riot'
       compileFileName = "#jsOutputDir/riot/#{filename}.js"
       cmd = "riot --ext html --expr #file #compileFileName"
     else if relativePath is '_source/template'
@@ -83,7 +83,7 @@ getCompileCmdAndFileName = (file, ext) ->
       compileFileName = "#relativePath/#filename.js"
       cmd = ["coffee --no-header -co #jsOutputDir/template #relativePath/#filename.coffee", "rm -f #relativePath/#filename.coffee"]
   case '.ls' then
-    compileFileName = "#jsOutputDir/template/#{filename}.js"
+    compileFileName = "#jsOutputDir/#{filename}.js"
     cmd = "lsc --no-header -co #jsOutputDir #file"
   default
     compileFileName = cmd = ''
