@@ -2,6 +2,7 @@ path        = require \path
 exec        = require \child_process .exec
 browserSync = require \browser-sync .create!
 notifier    = require \node-notifier
+fs          = require \fs
 
 # config {{{
 baseDir = '.'
@@ -20,6 +21,7 @@ compileWatchFile =
   "_source/live/*.ls"
   "_source/sass/*.sass"
   "_source/riot/*.html"
+  "_source/template/*.html"
 
 autoCompileFile = false
 #autoCompileFile = true
@@ -66,10 +68,22 @@ getCompileCmdAndFileName = (file, ext) ->
     compileFileName = "#jsOutputDir/#{filename}.js"
     cmd = "coffee --no-header -bco #jsOutputDir #file"
   case '.html' then
-    compileFileName = "#jsOutputDir/riot/#{filename}.js"
-    cmd = "riot --ext html --expr #file #compileFileName"
+    if relativePath is '_source/roit'
+      compileFileName = "#jsOutputDir/riot/#{filename}.js"
+      cmd = "riot --ext html --expr #file #compileFileName"
+    else if relativePath is '_source/template'
+      # 计算模板引用名称
+      templateName = filename
+      # 生成coffee模板
+      templateHtml = fs.readFileSync file
+      coffeeCode = "#{templateName} = \"\"\"\n#{templateHtml}\n\"\"\"\n"
+      coffeeCode += "ndoo.service('template').set('#{templateName}', #{templateName})"
+      fs.writeFileSync "#relativePath/#filename.coffee", coffeeCode
+      # 生成文件名及模板
+      compileFileName = "#relativePath/#filename.js"
+      cmd = ["coffee --no-header -co #jsOutputDir/template #relativePath/#filename.coffee", "rm -f #relativePath/#filename.coffee"]
   case '.ls' then
-    compileFileName = "#jsOutputDir/#{filename}.js"
+    compileFileName = "#jsOutputDir/template/#{filename}.js"
     cmd = "lsc --no-header -co #jsOutputDir #file"
   default
     compileFileName = cmd = ''

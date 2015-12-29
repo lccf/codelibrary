@@ -1,0 +1,9 @@
+<% if (data.list && data.list.length) { %>
+  <ul>
+  <% _.each(data.list, function(item, key) { %>
+    <li>
+    <a href="<%=item.url%>"><%=item.text%></a>
+    </li>
+  <% } %>
+  </ul>
+<% } %>
