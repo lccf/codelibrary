@@ -15,3 +15,6 @@ autocommand 配置文件
 
 ### WhacAMole
 colliejs打地鼠游戏 [WhacAMole](http://thinkjs.github.io/codelibrary/WhacAMole/index.html)
+
+### shscript
+shell脚本
