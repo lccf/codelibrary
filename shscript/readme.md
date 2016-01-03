@@ -15,3 +15,9 @@ docker-ip    #查看docker容器ip
 docker-pid   #查看docker pid
 docker-enter #通过nsenter进行指定的docker容器
 ```
+
+### git_ps1.sh
+git分支状态高亮
+
+### iterm2-zmodem
+iTerm2 zmodem脚本，iterm2-recv-zmodem.sh接收，iterm2-recv-zmodem.sh发送。
