@@ -18,3 +18,6 @@ colliejs打地鼠游戏 [WhacAMole](http://thinkjs.github.io/codelibrary/WhacAMo
 
 ### shscript
 shell脚本
+
+### WSH
+windows脚本
