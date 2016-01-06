@@ -21,3 +21,15 @@ git分支状态高亮
 
 ### iterm2-zmodem
 iTerm2 zmodem脚本，iterm2-recv-zmodem.sh接收，iterm2-recv-zmodem.sh发送。
+
+### compileCoffee.Makefile
+按目录批量编译coffee到js
+
+### pathmuge.sh
+PATH环境变量合并，来自centos系统的/etc/profile。
+
+示例：
+
+```bash
+pathmunge /usr/sbin
+```
