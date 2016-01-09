@@ -28,3 +28,11 @@
 - sass 表示文件后缀为sass格式的
 - command 表示执行的命令，可以是数组返回多个命令，会依次执行
 - | sed '\^@charset/d' 表示用通道将内容输出并使用sed命令删除以 @charset开头的行
+
+### 配置项
+
+```
+g:acmd_loaded        # 设置为1则不加载插件
+g:acmd_call_key      # 设置全局快捷键
+g:acmd_filetype_list # 监测发动的文件类型
+```
