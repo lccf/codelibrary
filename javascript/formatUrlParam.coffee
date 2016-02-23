@@ -7,15 +7,18 @@ formatUrlParam = (url = '') ->
   else
     urlparam = []
 
-  for item, key in urlparam
+  for item in urlparam
     [key, value] = item.split '='
-    key = key.replace /\[\]$/, ''
-    # fix 被传入unicode编码导致decodeURIComponent报错的情况
-    if value.match(/%u\w{4}/) isnt null
-      value = value.replace /%u\w{4}/g, (char) -> unescape char
-    value = decodeURIComponent value
-    if value is ''
+    if not key
       continue
+    key = key.replace /\[\]$/, ''
+    if value
+      # fix 被传入unicode编码的情况
+      if value.match(/%u\w{4}/) isnt null
+        value = value.replace /%u\w{4}/g, (char) -> unescape char
+      value = decodeURIComponent value
+    else
+      value = ''
     if _.has paramObject, key
       if _.isArray paramObject[key]
         paramObject[key].push value
