@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "tsc -p . && cucumberjs"
+  },
+  "devDependencies": {
+    "@types/cucumber": "0.0.33",
+    "@types/webdriverio": "^4.4.0",
+    "cucumber": "^2.0.0-rc.2",
+    "cucumber-assert": "^1.0.4",
+    "typescript": "^2.1.4",
+    "webdriverio": "^4.5.2"
+  }
+}
